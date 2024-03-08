@@ -1,0 +1,16 @@
+POST http://localhost:3001/api/blogs 
+Content-Type: application/json
+
+{
+    "title": "chapter",
+    "author": "ramesh",
+    "url": "google.com",
+    "likes": 25,
+    "user": "65eacb7e8e7d727d4175838c"
+}
+
+# {
+#     "username": "sunny@123",
+#     "name": "sunny",
+#     "password": "14656465456"
+# }
