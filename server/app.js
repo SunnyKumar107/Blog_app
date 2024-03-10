@@ -14,6 +14,7 @@ const loginRouter = require('./controllers/login');
 app.use(express.json());
 app.use(cors());
 app.use(morgan('tiny'));
+app.use(middleware.tokenExtractor);
 
 const mongoUrl = config.MONGODB_URI;
 

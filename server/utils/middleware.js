@@ -1,4 +1,23 @@
+const User = require('../models/user');
 const logger = require('./logger');
+const jwt = require('jsonwebtoken');
+
+const tokenExtractor = (request, response, next) => {
+  const authorization = request.get('authorization');
+  if (authorization && authorization.startsWith('Bearer ')) {
+    const token = authorization.split(' ');
+    request.token = token[1];
+  }
+  next();
+};
+
+const userExtractor = (request, response, next) => {
+  const decodedToken = jwt.verify(request.token, process.env.SECRET);
+  request.User = User.findById(decodedToken);
+  // console.log(request.user);
+
+  next();
+};
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' });
@@ -32,4 +51,6 @@ const errorHandler = (error, request, response, next) => {
 module.exports = {
   unknownEndpoint,
   errorHandler,
+  tokenExtractor,
+  userExtractor,
 };
