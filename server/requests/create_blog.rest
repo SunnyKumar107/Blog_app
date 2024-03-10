@@ -1,0 +1,12 @@
+POST   http://localhost:3003/api/blogs/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1bm55QDEyMyIsImlkIjoiNjVlYWNiN2U4ZTdkNzI3ZDQxNzU4MzhjIiwiaWF0IjoxNzEwMDkyNDM3LCJleHAiOjE3MTAwOTYwMzd9.fpSSPWfKM1FjTZ0ksMPRHPF1l6Dd6oec6CQbADs5isI
+
+{
+    "title": "Jesse's story",
+    "author": "Jesse parker",
+    "url": "jesse@mail.com",
+    "likes": 5,
+    "user": "65eacb7e8e7d727d4175838c"
+}
+

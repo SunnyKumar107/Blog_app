@@ -1,33 +1,6 @@
 const blogsRouter = require('express').Router();
 const Blog = require('../models/blog');
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const userExtractor = require('../utils/middleware').userExtractor;
-
-blogsRouter.post('/', async (request, response, next) => {
-  try {
-    const body = request.body;
-    const decodedToken = jwt.verify(request.token, process.env.SECRET);
-
-    if (!decodedToken.id) {
-      return response.status(401).json({ error: 'token invalid' });
-    }
-    const user = await User.findById(decodedToken.id);
-    const newBlog = new Blog({
-      title: body.title,
-      author: body.author,
-      url: body.url,
-      likes: body.likes || 0,
-      user: user.id,
-    });
-    const savedblog = await newBlog.save();
-    user.blogs = user.blogs.concat(savedblog._id);
-    await user.save();
-    return response.status(201).send(newBlog);
-  } catch (exception) {
-    next(exception);
-  }
-});
+const middleware = require('../utils/middleware');
 
 blogsRouter.get('/', async (request, response, next) => {
   try {
@@ -54,21 +27,67 @@ blogsRouter.get('/:id', async (request, response, next) => {
   }
 });
 
-blogsRouter.delete('/:id', async (request, response) => {
-  const decodedToken = jwt.verify(request.token, process.env.SECRET);
-  const user = await User.findById(decodedToken.id);
-  const blog = await Blog.findById(request.params.id);
+blogsRouter.post(
+  '/',
+  middleware.userExtractor,
+  async (request, response, next) => {
+    try {
+      const body = request.body;
 
-  if (!blog) {
-    response.status(404).end();
+      const user = request.user;
+
+      if (!user) {
+        return response.status(401).json({ error: 'token invalid' });
+      }
+
+      const newBlog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes || 0,
+        user: user.id,
+      });
+      const savedblog = await newBlog.save();
+      user.blogs = user.blogs.concat(savedblog._id);
+      await user.save();
+      return response.status(201).send(newBlog);
+    } catch (exception) {
+      next(exception);
+    }
   }
+);
 
-  console.log(user);
+blogsRouter.delete(
+  '/:id',
+  middleware.userExtractor,
+  async (request, response) => {
+    const user = request.user;
+    const id = request.params.id;
+    const blog = await Blog.findById(id);
 
-  if (user._id.toString() === blog.user.toString()) {
-    await Blog.findByIdAndDelete(request.params.id);
-    response.status(204).send(blog);
+    if (!blog) {
+      return response.status(404).end();
+    }
+
+    if (user._id.toString() === blog.user.toString()) {
+      await Blog.findByIdAndDelete(request.params.id);
+      response.status(204).send(blog);
+    }
   }
+);
+
+blogsRouter.put('/:id', async (request, response) => {
+  const body = request.body;
+  const id = request.params.id;
+  const blog = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes || 0,
+    user: body.user,
+  };
+  const updatedBlog = await Blog.findByIdAndUpdate(id, blog, { new: true });
+  response.status(202).json(updatedBlog);
 });
 
 module.exports = blogsRouter;

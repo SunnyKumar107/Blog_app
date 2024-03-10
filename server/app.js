@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(middleware.tokenExtractor);
+// app.use(middleware.userExtractor);
 
 const mongoUrl = config.MONGODB_URI;
 
