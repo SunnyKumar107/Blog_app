@@ -34,11 +34,11 @@ blogsRouter.post(
     try {
       const body = request.body;
 
-      const user = request.user;
-
-      if (!user) {
+      if (!request.user) {
         return response.status(401).json({ error: 'token invalid' });
       }
+
+      const user = request.user;
 
       const newBlog = new Blog({
         title: body.title,
