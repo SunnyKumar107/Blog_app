@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import propTypes from 'prop-types';
 
 const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
   const [showDetail, setShowDetail] = useState(false);
@@ -32,14 +33,14 @@ const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
       <div>
         {blog.title} <b>{blog.author}</b>{' '}
         <button onClick={() => setShowDetail(!showDetail)}>
-          {!showDetail ? 'view' : 'hide'}
+          {!showDetail ? 'View' : 'Hide'}
         </button>
       </div>
       {showDetail && (
         <div>
           <div>
             <a href={blog.url}>{blog.url}</a> <br />
-            likes: {blog.likes} <button onClick={handleUpdateBlog}>like</button>
+            likes: {blog.likes} <button onClick={handleUpdateBlog}>Like</button>
             {showUser && <p>{user.name}</p>}
           </div>
           <button
@@ -53,12 +54,19 @@ const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
               borderRadius: '3px',
             }}
           >
-            remove
+            Remove
           </button>
         </div>
       )}
     </div>
   );
+};
+
+Blog.propTypes = {
+  blog: propTypes.object.isRequired,
+  user: propTypes.object.isRequired,
+  onHandleUpdateBlog: propTypes.func.isRequired,
+  onHandleDeleteBlog: propTypes.func.isRequired,
 };
 
 export default Blog;

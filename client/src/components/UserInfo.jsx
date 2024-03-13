@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types';
 
 const UserInfo = ({ user, onHandleLogout }) => {
   const handleLogout = () => {
@@ -8,10 +9,15 @@ const UserInfo = ({ user, onHandleLogout }) => {
     <div style={{ marginBottom: '20px' }}>
       {user.name} logged-in{' '}
       <button type="button" onClick={handleLogout}>
-        logout
+        Logout
       </button>
     </div>
   );
+};
+
+UserInfo.propTypes = {
+  user: propTypes.object.isRequired,
+  onHandleLogout: propTypes.func.isRequired,
 };
 
 export default UserInfo;

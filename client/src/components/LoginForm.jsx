@@ -38,7 +38,7 @@ const LoginForm = ({ onLoginHandler, message }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit">login</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>
