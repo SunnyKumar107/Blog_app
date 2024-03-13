@@ -1,38 +1,38 @@
-import axios from 'axios';
-const baseUrl = '/api/blogs';
+import axios from 'axios'
+const baseUrl = '/api/blogs'
 
-let token = null;
+let token = null
 
 const setToken = (newToken) => {
-  token = `Bearer ${newToken}`;
-};
+  token = `Bearer ${newToken}`
+}
 
 const config = () => ({
   headers: {
     Authorization: token,
   },
-});
+})
 
 const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
-};
+  const request = axios.get(baseUrl)
+  return request.then((response) => response.data)
+}
 
 const create = async (blogObject) => {
-  const response = await axios.post(baseUrl, blogObject, config());
-  return response.data;
-};
+  const response = await axios.post(baseUrl, blogObject, config())
+  return response.data
+}
 
 const update = async (id, blogObject) => {
-  const response = await axios.put(`${baseUrl}/${id}`, blogObject);
-  return response.data;
-};
+  const response = await axios.put(`${baseUrl}/${id}`, blogObject)
+  return response.data
+}
 
 const deleteBlog = async (id) => {
-  const response = await axios.delete(`${baseUrl}/${id}`, config());
+  const response = await axios.delete(`${baseUrl}/${id}`, config())
 
-  return response.data;
-};
+  return response.data
+}
 
 export default {
   getAll: getAll,
@@ -40,4 +40,4 @@ export default {
   setToken: setToken,
   update: update,
   deleteBlog: deleteBlog,
-};
+}

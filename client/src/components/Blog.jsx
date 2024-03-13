@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
-import propTypes from 'prop-types';
+import React, { useState } from 'react'
+import propTypes from 'prop-types'
 
 const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
-  const [showDetail, setShowDetail] = useState(false);
-  const [showUser, setShowUser] = useState(true);
+  const [showDetail, setShowDetail] = useState(false)
+  const [showUser, setShowUser] = useState(true)
 
   const blogStyle = {
     border: '1px solid black',
     margin: '5px 0',
     padding: '5px',
-  };
+  }
 
   const handleUpdateBlog = () => {
     onHandleUpdateBlog(blog.id, {
       title: blog.title,
       author: blog.author,
       likes: blog.likes + 1,
-    });
+    })
 
-    setShowUser(false);
-  };
+    setShowUser(false)
+  }
 
   const handleDeleteBlog = () => {
     onHandleDeleteBlog(blog.id, {
       title: blog.title,
       author: blog.author,
-    });
-  };
+    })
+  }
 
   return (
     <div style={blogStyle}>
@@ -59,14 +59,14 @@ const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 Blog.propTypes = {
   blog: propTypes.object.isRequired,
   user: propTypes.object.isRequired,
   onHandleUpdateBlog: propTypes.func.isRequired,
   onHandleDeleteBlog: propTypes.func.isRequired,
-};
+}
 
-export default Blog;
+export default Blog

@@ -1,10 +1,10 @@
-import React from 'react';
-import propTypes from 'prop-types';
+import React from 'react'
+import propTypes from 'prop-types'
 
 const UserInfo = ({ user, onHandleLogout }) => {
   const handleLogout = () => {
-    onHandleLogout();
-  };
+    onHandleLogout()
+  }
   return (
     <div style={{ marginBottom: '20px' }}>
       {user.name} logged-in{' '}
@@ -12,12 +12,12 @@ const UserInfo = ({ user, onHandleLogout }) => {
         Logout
       </button>
     </div>
-  );
-};
+  )
+}
 
 UserInfo.propTypes = {
   user: propTypes.object.isRequired,
   onHandleLogout: propTypes.func.isRequired,
-};
+}
 
-export default UserInfo;
+export default UserInfo

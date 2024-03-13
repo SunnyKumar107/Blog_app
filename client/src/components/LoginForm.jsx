@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import Notification from './Notification';
+import React, { useState } from 'react'
+import Notification from './Notification'
 
 const LoginForm = ({ onLoginHandler, message }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleLogin = (event) => {
-    event.preventDefault();
-    onLoginHandler({ username, password });
-    setUsername('');
-    setPassword('');
-  };
+    event.preventDefault()
+    onLoginHandler({ username, password })
+    setUsername('')
+    setPassword('')
+  }
 
   return (
     <div>
@@ -42,7 +42,7 @@ const LoginForm = ({ onLoginHandler, message }) => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm
