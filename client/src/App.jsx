@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './app.css';
 import Blog from './components/Blog';
 import blogService from './services/blogs';
@@ -6,12 +6,16 @@ import loginService from './services/login';
 import Notification from './components/Notification';
 import BlogForm from './components/BlogForm';
 import LoginForm from './components/LoginForm';
+import Togglable from './components/Togglable';
+import UserInfo from './components/UserInfo';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [message, setMessage] = useState(null);
   const [user, setUser] = useState(null);
-  const [showBlogForm, setShowBlogForm] = useState(false);
+
+  const TogglableRef = useRef();
+  console.log(TogglableRef);
 
   const showMessage = (msg, type) => {
     setMessage({
@@ -65,6 +69,7 @@ const App = () => {
   };
 
   const addBlog = async (blogObject) => {
+    TogglableRef.current.toggleVisible();
     try {
       const newBlog = await blogService.create({
         title: blogObject.title,
@@ -118,48 +123,24 @@ const App = () => {
   return (
     <div>
       <div>
-        {message !== null ? <Notification message={message} /> : null}
+        {message && <Notification message={message} />}
         <h1>blogs</h1>
-        <div>
-          {user.name} logged-in{' '}
-          <button type="button" onClick={handleLogout}>
-            logout
-          </button>
-        </div>
+        <UserInfo user={user} onHandleLogout={handleLogout} />
       </div>
 
-      {showBlogForm ? (
-        <div>
-          <BlogForm
-            createBlog={addBlog}
-            afterAddedBlog={() => setShowBlogForm(false)}
-          />
-          <div>
-            <button onClick={() => setShowBlogForm(false)}>cancel</button>
-          </div>
-        </div>
-      ) : (
-        <div>
-          <br />
-          <button onClick={() => setShowBlogForm(!showBlogForm)}>
-            create new
-          </button>
-        </div>
-      )}
+      <Togglable ref={TogglableRef}>
+        <BlogForm createBlog={addBlog} />
+      </Togglable>
 
-      {!showBlogForm && (
-        <div>
-          {blogs.map((blog) => (
-            <Blog
-              key={blog.id}
-              blog={blog}
-              user={user}
-              onHandleUpdateBlog={handleUpdateBlog}
-              onHandleDeleteBlog={handleDeleteBlog}
-            />
-          ))}
-        </div>
-      )}
+      {blogs.map((blog) => (
+        <Blog
+          key={blog.id}
+          blog={blog}
+          user={user}
+          onHandleUpdateBlog={handleUpdateBlog}
+          onHandleDeleteBlog={handleDeleteBlog}
+        />
+      ))}
     </div>
   );
 };

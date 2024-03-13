@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const BlogForm = ({ createBlog, afterAddedBlog }) => {
+const BlogForm = ({ createBlog }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -16,7 +16,6 @@ const BlogForm = ({ createBlog, afterAddedBlog }) => {
     setTitle('');
     setAuthor('');
     setUrl('');
-    afterAddedBlog();
   };
 
   return (
@@ -52,7 +51,7 @@ const BlogForm = ({ createBlog, afterAddedBlog }) => {
             onChange={(e) => setUrl(e.target.value)}
           />
         </div>
-        <button type="submit">create</button>
+        <button type="submit">Create</button>
       </form>
     </div>
   );
