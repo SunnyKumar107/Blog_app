@@ -4,6 +4,7 @@ import propTypes from 'prop-types'
 const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
   const [showDetail, setShowDetail] = useState(false)
   const [showUser, setShowUser] = useState(true)
+  const [userLikes, setUserLikes] = useState(blog.likes)
 
   const blogStyle = {
     border: '1px solid black',
@@ -11,13 +12,15 @@ const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
     padding: '5px',
   }
 
-  const handleUpdateBlog = () => {
+  const handleAddLike = () => {
     onHandleUpdateBlog(blog.id, {
       title: blog.title,
       author: blog.author,
+      url: blog.url,
       likes: blog.likes + 1,
+      user: blog.user.id,
     })
-
+    setUserLikes(userLikes + 1)
     setShowUser(false)
   }
 
@@ -29,33 +32,35 @@ const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       <div>
         {blog.title} <b>{blog.author}</b>{' '}
         <button onClick={() => setShowDetail(!showDetail)}>
-          {!showDetail ? 'View' : 'Hide'}
+          {showDetail ? 'Hide' : 'Show'}
         </button>
       </div>
       {showDetail && (
         <div>
           <div>
             <a href={blog.url}>{blog.url}</a> <br />
-            likes: {blog.likes} <button onClick={handleUpdateBlog}>Like</button>
-            {showUser && <p>{user.name}</p>}
+            likes: {userLikes} <button onClick={handleAddLike}>Like</button>
+            {showUser && <p>{blog.user.username}</p>}
           </div>
-          <button
-            onClick={handleDeleteBlog}
-            style={{
-              backgroundColor: 'blue',
-              border: 'none',
-              color: 'white',
-              padding: '5px 10px',
-              marginTop: '10px',
-              borderRadius: '3px',
-            }}
-          >
-            Remove
-          </button>
+          {blog.user.username === user.username && (
+            <button
+              onClick={handleDeleteBlog}
+              style={{
+                backgroundColor: 'blue',
+                border: 'none',
+                color: 'white',
+                padding: '5px 10px',
+                marginTop: '10px',
+                borderRadius: '3px',
+              }}
+            >
+              Remove
+            </button>
+          )}
         </div>
       )}
     </div>

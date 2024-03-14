@@ -43,7 +43,6 @@ const App = () => {
 
       blogService.setToken(User.token)
       setUser(User)
-      // setMessage('login successfully');
       showMessage('Login successfully!', 'success')
     } catch (error) {
       showMessage('Wrong username or password!', 'error')

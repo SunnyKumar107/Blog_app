@@ -15,7 +15,7 @@ const LoginForm = ({ onLoginHandler, message }) => {
   return (
     <div>
       <h1>Log in to application</h1>
-      {message !== null ? <Notification message={message} /> : null}
+      {message && <Notification message={message} />}
       <br />
       <div>
         <form onSubmit={handleLogin}>
