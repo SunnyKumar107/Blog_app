@@ -35,17 +35,26 @@ const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
     <div style={blogStyle} className="blog">
       <div>
         {blog.title} <b>{blog.author}</b>{' '}
-        <button onClick={() => setShowDetail(!showDetail)}>
-          {showDetail ? 'Hide' : 'Show'}
+        <button
+          className="detail_btn"
+          onClick={() => setShowDetail(!showDetail)}
+        >
+          {showDetail ? 'Hide' : 'View'}
         </button>
       </div>
       {showDetail && (
         <div>
-          <div>
-            <a href={blog.url}>{blog.url}</a> <br />
+          <a className="url" href={blog.url}>
+            {blog.url}
+          </a>{' '}
+          <div className="likes">
             likes: {userLikes} <button onClick={handleAddLike}>Like</button>
-            {showUser && <p>{blog.user.username}</p>}
           </div>
+          {showUser && (
+            <div>
+              <br /> {blog.user.username}
+            </div>
+          )}
           {blog.user.username === user.username && (
             <button
               onClick={handleDeleteBlog}
