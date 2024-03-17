@@ -36,6 +36,7 @@ const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
       <div>
         {blog.title} <b>{blog.author}</b>{' '}
         <button
+          id="show_detail_btn"
           className="detail_btn"
           onClick={() => setShowDetail(!showDetail)}
         >
@@ -48,7 +49,10 @@ const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
             {blog.url}
           </a>{' '}
           <div className="likes">
-            likes: {userLikes} <button onClick={handleAddLike}>Like</button>
+            likes: {userLikes}{' '}
+            <button id="like_btn" onClick={handleAddLike}>
+              Like
+            </button>
           </div>
           {showUser && (
             <div>
@@ -57,6 +61,7 @@ const Blog = ({ blog, user, onHandleUpdateBlog, onHandleDeleteBlog }) => {
           )}
           {blog.user.username === user.username && (
             <button
+              id="remove_blog_btn"
               onClick={handleDeleteBlog}
               style={{
                 backgroundColor: 'blue',

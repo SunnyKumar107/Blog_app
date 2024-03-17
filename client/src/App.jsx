@@ -28,9 +28,11 @@ const App = () => {
     }, 3000)
   }
 
-  useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
-  }, [])
+  const sortBlog = () => {
+    blogService
+      .getAll()
+      .then((blogs) => setBlogs(blogs.sort((a, b) => b.likes - a.likes)))
+  }
 
   const handleLogin = async (userObject) => {
     try {
@@ -50,6 +52,8 @@ const App = () => {
   }
 
   useEffect(() => {
+    sortBlog()
+
     const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
 
     if (loggedUserJSON) {
@@ -75,7 +79,7 @@ const App = () => {
         author: blogObject.author,
         url: blogObject.url,
       })
-      blogService.getAll().then((blogs) => setBlogs(blogs))
+      sortBlog()
 
       showMessage(
         `A new blog  ${newBlog.title} by ${newBlog.author}`,
@@ -89,7 +93,7 @@ const App = () => {
   const handleUpdateBlog = async (id, blogObject) => {
     try {
       await blogService.update(id, blogObject)
-      blogService.getAll().then((blogs) => setBlogs(blogs))
+      sortBlog()
     } catch (error) {
       showMessage('Update blog failed!', 'error')
     }
@@ -103,7 +107,7 @@ const App = () => {
 
       if (isDelete) {
         await blogService.deleteBlog(id)
-        blogService.getAll().then((blogs) => setBlogs(blogs))
+        sortBlog()
 
         showMessage(
           `Removed blog ${blogObject.title} by ${blogObject.author}`,
@@ -123,7 +127,7 @@ const App = () => {
     <div>
       <div>
         {message && <Notification message={message} />}
-        <h1>blogs</h1>
+        <h1>Blogs</h1>
         <UserInfo user={user} onHandleLogout={handleLogout} />
       </div>
 

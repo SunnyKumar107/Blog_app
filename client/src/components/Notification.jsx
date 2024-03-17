@@ -8,13 +8,14 @@ const Notification = ({ message }) => {
     borderStyle: 'solid',
     borderRadius: 5,
     color: message && message.type === 'error' ? 'red' : 'green',
-    fontSize: '20',
+    fontSize: '30px',
+    fontWeight: '400',
     marginBottom: '10',
   }
 
   return (
-    <div style={msgStyle}>
-      <h2>{message.msg}</h2>
+    <div className="msg" style={msgStyle}>
+      {message.msg}
     </div>
   )
 }

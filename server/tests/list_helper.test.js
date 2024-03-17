@@ -1,11 +1,11 @@
-const listHelper = require('../utils/list_helper');
+const listHelper = require('../utils/list_helper')
 
 test('dummy returns one', () => {
-  const blogs = [];
+  const blogs = []
 
-  const result = listHelper.dummy(blogs);
-  expect(result).toBe(1);
-});
+  const result = listHelper.dummy(blogs)
+  expect(result).toBe(1)
+})
 
 const initialBlogs = [
   {
@@ -56,7 +56,7 @@ const initialBlogs = [
     likes: 2,
     __v: 0,
   },
-];
+]
 
 describe('total likes', () => {
   const listWithOneBlog = [
@@ -68,25 +68,25 @@ describe('total likes', () => {
       likes: 5,
       __v: 0,
     },
-  ];
+  ]
 
   test('of empty list is zero', () => {
-    const result = listHelper.totalLikes([]);
-    expect(result).toBe(0);
-  });
+    const result = listHelper.totalLikes([])
+    expect(result).toBe(0)
+  })
   test('when list has only one blog, equals the likes of that', () => {
-    const result = listHelper.totalLikes(listWithOneBlog);
-    expect(result).toBe(listWithOneBlog[0].likes);
-  });
+    const result = listHelper.totalLikes(listWithOneBlog)
+    expect(result).toBe(listWithOneBlog[0].likes)
+  })
   test('of a blogger list is calculated right', () => {
-    const result = listHelper.totalLikes(initialBlogs);
-    expect(result).toBe(36);
-  });
-});
+    const result = listHelper.totalLikes(initialBlogs)
+    expect(result).toBe(36)
+  })
+})
 
 describe('favourite blog', () => {
   test('in this blogger list, which has most likes', () => {
-    const result = listHelper.favouriteBlog(initialBlogs);
+    const result = listHelper.favouriteBlog(initialBlogs)
 
     expect(result).toEqual({
       _id: '5a422b3a1b54a676234d17f9',
@@ -95,30 +95,30 @@ describe('favourite blog', () => {
       url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
       likes: 12,
       __v: 0,
-    });
-  });
-});
+    })
+  })
+})
 
 describe('most blogs', () => {
   test('most blogs', () => {
-    const result = listHelper.mostBlogs(initialBlogs);
+    const result = listHelper.mostBlogs(initialBlogs)
 
     expect(result).toEqual({
       author: 'Robert C. Martin',
       blogs: 3,
-    });
-  });
-});
+    })
+  })
+})
 
 describe('most likes', () => {
   test('most likes', () => {
-    const result = listHelper.mostLikes(initialBlogs);
+    const result = listHelper.mostLikes(initialBlogs)
 
     expect(result).toEqual({
       author: 'Edsger W. Dijkstra',
       likes: 17,
-    });
-  });
-});
+    })
+  })
+})
 
-module.exports = initialBlogs;
+module.exports = initialBlogs
